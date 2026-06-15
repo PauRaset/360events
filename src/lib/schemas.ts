@@ -46,3 +46,27 @@ export const reservaSchema = z.object({
 });
 
 export type ReservaInput = z.infer<typeof reservaSchema>;
+
+/**
+ * Esquema de validació del formulari de contacte, compartit entre el client
+ * (ContacteForm) i el servidor (API /api/contacte).
+ */
+export const contacteSchema = z.object({
+  nom: z
+    .string({ required_error: 'Indica’ns el teu nom' })
+    .trim()
+    .min(2, 'Indica’ns el teu nom'),
+  email: z
+    .string({ required_error: 'Necessitem un correu de contacte' })
+    .trim()
+    .email('Introdueix un correu electrònic vàlid'),
+  telefon: z.string().trim().optional().or(z.literal('')),
+  assumpte: z.string().trim().optional().or(z.literal('')),
+  missatge: z
+    .string({ required_error: 'Escriu-nos un missatge' })
+    .trim()
+    .min(10, 'Explica’ns una mica més (mínim 10 caràcters)')
+    .max(3000),
+});
+
+export type ContacteInput = z.infer<typeof contacteSchema>;

@@ -56,7 +56,7 @@ export function Navbar() {
 
         {/* CTAs escriptori */}
         <div className="hidden items-center gap-3 md:flex">
-          <Button href="/contacte#truca" variant="ghost" className="px-4 py-2.5">
+          <Button href="/contacte" variant="ghost" className="px-4 py-2.5">
             <IconPhone className="h-4 w-4" />
             Vols que et truquem?
           </Button>
@@ -103,7 +103,7 @@ export function Navbar() {
               </ul>
               <div className="mt-4 flex flex-col gap-3">
                 <Button
-                  href="/contacte#truca"
+                  href="/contacte"
                   variant="ghost"
                   onClick={() => setOpen(false)}
                 >

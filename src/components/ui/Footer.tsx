@@ -6,7 +6,7 @@ import {
   IconTikTok,
   IconYouTube,
 } from './Icons';
-import { site, footerServices } from '@/lib/site';
+import { site, footerServices, footerCompany } from '@/lib/site';
 
 const socials = [
   { label: 'Instagram', href: site.social.instagram, Icon: IconInstagram },
@@ -18,7 +18,7 @@ const socials = [
 export function Footer() {
   return (
     <footer className="relative border-t border-white/10 bg-base-2/60">
-      <div className="container-page grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="container-page grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
         {/* Marca */}
         <div>
           <Logo />
@@ -49,6 +49,25 @@ export function Footer() {
           </h3>
           <ul className="mt-5 space-y-3">
             {footerServices.map((s) => (
+              <li key={s.href}>
+                <Link
+                  href={s.href}
+                  className="text-sm text-text-gray transition-colors hover:text-platinum"
+                >
+                  {s.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Empresa */}
+        <div>
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-platinum">
+            Empresa
+          </h3>
+          <ul className="mt-5 space-y-3">
+            {footerCompany.map((s) => (
               <li key={s.href}>
                 <Link
                   href={s.href}

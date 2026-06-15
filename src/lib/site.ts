@@ -31,10 +31,11 @@ export const site = {
 export type NavLink = { label: string; href: string };
 
 export const navLinks: NavLink[] = [
-  { label: 'Serveis', href: '/#serveis' },
+  { label: 'Qui som', href: '/qui-som' },
   { label: 'Artistes', href: '/artistes' },
   { label: 'Lloguer d’equips', href: '/lloguer-equips' },
   { label: 'Esdeveniments', href: '/#esdeveniments' },
+  { label: 'Galeria', href: '/galeria' },
   { label: 'Contacte', href: '/contacte' },
 ];
 
@@ -44,4 +45,10 @@ export const footerServices: NavLink[] = [
   { label: 'Casaments', href: '/casaments' },
   { label: 'Esdeveniments d’empresa', href: '/esdeveniments-empresa' },
   { label: 'Festes majors', href: '/festes-majors' },
+];
+
+export const footerCompany: NavLink[] = [
+  { label: 'Qui som', href: '/qui-som' },
+  { label: 'Galeria', href: '/galeria' },
+  { label: 'Contacte', href: '/contacte' },
 ];

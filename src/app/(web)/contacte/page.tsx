@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-import { CallbackBand } from '@/components/sections/CallbackBand';
+import { ContacteForm } from '@/components/ContacteForm';
 import {
   IconPhone,
   IconInstagram,
+  IconWhatsApp,
   IconArrowRight,
 } from '@/components/ui/Icons';
 import { site } from '@/lib/site';
@@ -11,7 +12,7 @@ export function generateMetadata(): Metadata {
   return {
     title: 'Contacte',
     description:
-      'Contacta amb 360Events per al teu pressupost gratuït. Telèfon, email i WhatsApp per a esdeveniments a Catalunya.',
+      'Contacta amb 360Events per al teu pressupost gratuït. Telèfon, email, Instagram i WhatsApp per a esdeveniments a Catalunya.',
     alternates: { canonical: '/contacte' },
   };
 }
@@ -37,7 +38,14 @@ const cards = [
   },
 ];
 
-export default function ContactePage() {
+export default function ContactePage({
+  searchParams,
+}: {
+  searchParams: { assumpte?: string };
+}) {
+  const assumpte =
+    typeof searchParams.assumpte === 'string' ? searchParams.assumpte : '';
+
   return (
     <>
       <section className="relative overflow-hidden">
@@ -56,7 +64,8 @@ export default function ContactePage() {
         </div>
       </section>
 
-      <section className="container-page grid gap-5 pb-8 sm:grid-cols-3">
+      {/* Dades de contacte */}
+      <section className="container-page grid gap-5 pb-6 sm:grid-cols-3">
         {cards.map((c) => (
           <a
             key={c.label}
@@ -78,9 +87,33 @@ export default function ContactePage() {
         ))}
       </section>
 
-      <div id="truca">
-        <CallbackBand />
-      </div>
+      {/* WhatsApp destacat */}
+      <section className="container-page pb-12">
+        <a
+          href={site.contact.whatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-3 rounded-2xl border border-[#25D366]/40 bg-[#25D366]/10 px-6 py-4 font-semibold text-platinum transition-colors hover:bg-[#25D366]/20"
+        >
+          <IconWhatsApp className="h-6 w-6 text-[#25D366]" />
+          Parla amb nosaltres per WhatsApp
+        </a>
+      </section>
+
+      {/* Formulari */}
+      <section className="container-page pb-20">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-8 text-center">
+            <h2 className="font-display text-3xl font-extrabold sm:text-4xl">
+              Escriu-nos
+            </h2>
+            <p className="mt-4 text-text-gray">
+              Omple el formulari i et contactarem amb una proposta a mida.
+            </p>
+          </div>
+          <ContacteForm defaultAssumpte={assumpte} />
+        </div>
+      </section>
     </>
   );
 }
