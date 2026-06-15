@@ -33,13 +33,31 @@ Obre [http://localhost:3000](http://localhost:3000).
 
 ### Scripts disponibles
 
-| Script           | Descripció                              |
-| ---------------- | --------------------------------------- |
-| `npm run dev`    | Servidor de desenvolupament             |
-| `npm run build`  | Build de producció                      |
-| `npm run start`  | Serveix el build de producció           |
-| `npm run lint`   | Comprova el codi amb ESLint             |
-| `npm run format` | Formata el codi amb Prettier            |
+| Script             | Descripció                                  |
+| ------------------ | ------------------------------------------- |
+| `npm run dev`      | Servidor de desenvolupament                 |
+| `npm run build`    | Build de producció                          |
+| `npm run start`    | Serveix el build de producció               |
+| `npm run lint`     | Comprova el codi amb ESLint                 |
+| `npm run format`   | Formata el codi amb Prettier                |
+| `npm run db:migrate` | Crea/aplica migracions (dev) amb Prisma   |
+| `npm run db:deploy`  | Aplica migracions (producció)             |
+| `npm run db:seed`    | Insereix els artistes inicials            |
+| `npm run db:studio`  | Obre Prisma Studio                        |
+
+## 🗄️ Base de dades (Prisma + PostgreSQL)
+
+1. Omple `DATABASE_URL` a `.env` (PostgreSQL: Neon, Supabase, Railway…).
+2. Aplica l'esquema i carrega les dades inicials:
+
+```bash
+npx prisma migrate deploy   # aplica la migració inicial
+npm run db:seed             # insereix els 3 artistes
+```
+
+> En desenvolupament pots usar `npm run db:migrate` per crear noves migracions.
+> Models: `Artista` i `Reserva` (amb l'enum `EstatReserva`). Vegeu
+> `prisma/schema.prisma`.
 
 ## 🎨 Sistema de disseny
 

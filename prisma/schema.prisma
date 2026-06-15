@@ -1,0 +1,54 @@
+// Prisma schema · 360Events.cat
+// Capa de dades: artistes i reserves.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Artista {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  nom         String
+  categoria   String
+  descripcio  String   @db.Text
+  riderTecnic String?  @db.Text
+  fotos       String[]
+  videos      String[]
+  destacat    Boolean  @default(false)
+  actiu       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  reserves Reserva[]
+}
+
+enum EstatReserva {
+  NOVA
+  EN_REVISIO
+  PRESSUPOST_ENVIAT
+  CONFIRMADA
+  CANCELLADA
+}
+
+model Reserva {
+  id          String       @id @default(cuid())
+  nom         String
+  telefon     String
+  email       String
+  tipusEvent  String
+  dataEvent   DateTime
+  ubicacio    String
+  assistents  Int?
+  missatge    String?      @db.Text
+  artistaId   String?
+  artista     Artista?     @relation(fields: [artistaId], references: [id])
+  servei      String?
+  estat       EstatReserva @default(NOVA)
+  gcalEventId String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}

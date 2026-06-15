@@ -12,20 +12,24 @@ function gradientDataUri(from: string, to: string) {
 
 export function GradientImage({
   alt,
+  src,
   from = '#0A2A66',
   to = '#05070F',
   className,
   sizes = '(max-width: 768px) 100vw, 33vw',
 }: {
   alt: string;
+  /** Imatge real opcional; si no es passa, es mostra el degradat placeholder. */
+  src?: string;
   from?: string;
   to?: string;
   className?: string;
   sizes?: string;
 }) {
+  const source = src && src.length > 0 ? src : gradientDataUri(from, to);
   return (
     <Image
-      src={gradientDataUri(from, to)}
+      src={source}
       alt={alt}
       fill
       sizes={sizes}
