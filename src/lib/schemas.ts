@@ -70,3 +70,29 @@ export const contacteSchema = z.object({
 });
 
 export type ContacteInput = z.infer<typeof contacteSchema>;
+
+/** Estats possibles d'una reserva (coincideix amb l'enum EstatReserva de Prisma). */
+export const ESTAT_RESERVA = [
+  'NOVA',
+  'EN_REVISIO',
+  'PRESSUPOST_ENVIAT',
+  'CONFIRMADA',
+  'CANCELLADA',
+] as const;
+
+export type EstatReservaValue = (typeof ESTAT_RESERVA)[number];
+
+export const ESTAT_LABELS: Record<EstatReservaValue, string> = {
+  NOVA: 'Nova',
+  EN_REVISIO: 'En revisió',
+  PRESSUPOST_ENVIAT: 'Pressupost enviat',
+  CONFIRMADA: 'Confirmada',
+  CANCELLADA: 'Cancel·lada',
+};
+
+/** Validació del canvi d'estat (API PATCH). */
+export const estatUpdateSchema = z.object({
+  estat: z.enum(ESTAT_RESERVA, {
+    errorMap: () => ({ message: 'Estat no vàlid' }),
+  }),
+});

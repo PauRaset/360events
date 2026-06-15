@@ -1,26 +1,32 @@
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
+import { auth } from '@/auth';
+import { Logo } from '@/components/ui/Logo';
+import { LoginForm } from './LoginForm';
 
 export const metadata: Metadata = {
-  title: 'Panell d’administració',
+  title: 'Accés al panell',
+  robots: { index: false, follow: false },
 };
 
-/**
- * Placeholder del panell d'administració.
- * La lògica (auth, base de dades, gestió) arribarà en fases posteriors.
- */
-export default function PanellPage() {
+export default async function PanellLoginPage() {
+  const session = await auth();
+  if (session?.user) redirect('/panell/reserves');
+
   return (
-    <div className="container-page flex min-h-screen flex-col items-center justify-center py-24 text-center">
-      <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-widest text-text-gray">
-        En construcció
-      </span>
-      <h1 className="mt-6 font-display text-3xl font-extrabold text-platinum">
-        Panell 360 Events
-      </h1>
-      <p className="mt-3 max-w-md text-sm text-text-gray">
-        L’àrea d’administració (autenticació, base de dades, gestió d’artistes i
-        esdeveniments) s’implementarà en properes fases.
-      </p>
+    <div className="flex min-h-screen items-center justify-center px-5">
+      <div className="w-full max-w-md">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <Logo />
+          <h1 className="mt-6 font-display text-2xl font-extrabold text-platinum">
+            Panell de gestió
+          </h1>
+          <p className="mt-2 text-sm text-text-gray">
+            Accés restringit. Inicia sessió per continuar.
+          </p>
+        </div>
+        <LoginForm />
+      </div>
     </div>
   );
 }
