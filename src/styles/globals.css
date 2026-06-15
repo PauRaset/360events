@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Fons */
+  --color-base: #05070f;
+  --color-base-2: #080b16;
+  --color-panel: #0c1122;
+  /* Blaus */
+  --color-electric: #1e7bff;
+  --color-electric-bright: #3d93ff;
+  --color-electric-deep: #0a2a66;
+  /* Neutres */
+  --color-silver: #c8d2e0;
+  --color-platinum: #e9eef7;
+  --color-white: #ffffff;
+  --color-text-gray: #8590a6;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-base font-body text-silver antialiased;
+    background-image:
+      radial-gradient(
+        circle at 50% -10%,
+        rgba(30, 123, 255, 0.12),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 100% 0%,
+        rgba(10, 42, 102, 0.18),
+        transparent 45%
+      );
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-platinum;
+    text-wrap: balance;
+  }
+
+  /* Foc de teclat sempre visible i accessible */
+  :focus-visible {
+    outline: 2px solid var(--color-electric-bright);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: rgba(30, 123, 255, 0.35);
+    color: var(--color-white);
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  .heading-gradient {
+    @apply bg-gradient-to-br from-white via-platinum to-electric-bright bg-clip-text text-transparent;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-electric text-white shadow-glow hover:bg-electric-bright hover:shadow-glow-lg;
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/15 bg-white/5 text-platinum backdrop-blur hover:border-electric/60 hover:bg-white/10;
+  }
+
+  .panel {
+    @apply rounded-2xl border border-white/10 bg-panel/70 backdrop-blur;
+  }
+}
+
+/* Respecta les preferències de moviment reduït */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
