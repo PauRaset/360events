@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 const links = [
   { label: 'Reserves', href: '/panell/reserves' },
   { label: 'Artistes', href: '/panell/artistes' },
+  { label: 'Equips', href: '/panell/equips' },
 ];
 
 export function AdminHeader({ email }: { email?: string | null }) {

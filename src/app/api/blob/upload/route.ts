@@ -20,7 +20,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   // Diagnòstic (no exposa el secret): presència, longitud i prefix del token.
   const token = process.env.BLOB_READ_WRITE_TOKEN;
-  console.log('[artistes/upload] inici', {
+  console.log('[blob/upload] inici', {
     bodyType: (body as { type?: string })?.type,
     hasToken: Boolean(token),
     tokenLength: token?.length ?? 0,
@@ -54,7 +54,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json(json);
   } catch (err) {
     // Registra la causa real (amb stack) als Runtime Logs de Vercel.
-    console.error('[artistes/upload] ERROR:', err);
+    console.error('[blob/upload] ERROR:', err);
     const message = err instanceof Error ? err.message : 'Error de pujada';
     const status = message.includes('No autoritzat') ? 401 : 500;
     return NextResponse.json({ error: message }, { status });

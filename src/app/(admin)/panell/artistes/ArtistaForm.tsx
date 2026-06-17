@@ -4,7 +4,7 @@ import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { artistaSchema } from '@/lib/schemas';
 import { slugify } from '@/lib/utils';
-import { PhotoUploader } from './PhotoUploader';
+import { PhotoUploader } from '../PhotoUploader';
 import { IconArrowRight, IconClose } from '@/components/ui/Icons';
 
 const inputCls =

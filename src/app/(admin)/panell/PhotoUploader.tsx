@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { upload } from '@vercel/blob/client';
 import { IconClose } from '@/components/ui/Icons';
 
+/** Pujada de fotos (client upload) a Vercel Blob, compartida pel panell. */
 export function PhotoUploader({
   fotos,
   onChange,
@@ -27,7 +28,7 @@ export function PhotoUploader({
       for (const file of files) {
         const result = await upload(file.name, file, {
           access: 'public',
-          handleUploadUrl: '/api/artistes/upload',
+          handleUploadUrl: '/api/blob/upload',
         });
         nextUrls.push(result.url);
       }
@@ -58,7 +59,7 @@ export function PhotoUploader({
           >
             <Image
               src={url}
-              alt="Foto de l’artista"
+              alt="Foto"
               fill
               sizes="96px"
               unoptimized

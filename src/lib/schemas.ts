@@ -127,3 +127,30 @@ export const artistaSchema = z.object({
 });
 
 export type ArtistaInput = z.infer<typeof artistaSchema>;
+
+/** Validació d'un equip de lloguer (creació i edició). */
+export const CATEGORIES_EQUIP = [
+  'So',
+  'DJ',
+  'Il·luminació',
+  'Estructures',
+  'Efectes especials',
+  'Accessoris',
+] as const;
+
+export const equipSchema = z.object({
+  nom: z
+    .string({ required_error: 'El nom és obligatori' })
+    .trim()
+    .min(2, 'El nom és obligatori'),
+  categoria: z.enum(CATEGORIES_EQUIP, {
+    errorMap: () => ({ message: 'Tria una categoria' }),
+  }),
+  descripcio: z.string().trim().max(2000).optional().or(z.literal('')),
+  fotos: z.array(z.string().url('URL de foto no vàlida')).default([]),
+  destacat: z.boolean().default(false),
+  actiu: z.boolean().default(true),
+  ordre: z.coerce.number().int().min(0).default(0),
+});
+
+export type EquipInput = z.infer<typeof equipSchema>;
