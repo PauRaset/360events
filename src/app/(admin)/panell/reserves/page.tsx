@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
-import { Logo } from '@/components/ui/Logo';
-import { SignOutButton } from '../SignOutButton';
+import { AdminHeader } from '../AdminHeader';
 import { ReservesBoard, type ReservaItem } from './ReservesBoard';
 import type { EstatReservaValue } from '@/lib/schemas';
 
@@ -41,22 +40,7 @@ export default async function ReservesPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-base/80 backdrop-blur-xl">
-        <div className="container-page flex h-16 items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Logo />
-            <span className="hidden text-sm text-text-gray sm:inline">
-              · Panell de reserves
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="hidden text-sm text-text-gray md:inline">
-              {session.user.email}
-            </span>
-            <SignOutButton />
-          </div>
-        </div>
-      </header>
+      <AdminHeader email={session.user.email} />
 
       <main className="container-page py-8">
         <div className="mb-6">

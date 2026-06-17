@@ -96,3 +96,34 @@ export const estatUpdateSchema = z.object({
     errorMap: () => ({ message: 'Estat no vàlid' }),
   }),
 });
+
+/** Validació d'un artista (creació i edició), compartida client/servidor. */
+export const artistaSchema = z.object({
+  nom: z
+    .string({ required_error: 'El nom és obligatori' })
+    .trim()
+    .min(2, 'El nom és obligatori'),
+  slug: z
+    .string({ required_error: 'El slug és obligatori' })
+    .trim()
+    .min(2, 'El slug és obligatori')
+    .regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      'El slug només pot tenir minúscules, números i guions',
+    ),
+  categoria: z
+    .string({ required_error: 'La categoria és obligatòria' })
+    .trim()
+    .min(2, 'La categoria és obligatòria'),
+  descripcio: z
+    .string({ required_error: 'La descripció és obligatòria' })
+    .trim()
+    .min(10, 'Afegeix una descripció (mínim 10 caràcters)'),
+  riderTecnic: z.string().trim().max(4000).optional().or(z.literal('')),
+  fotos: z.array(z.string().url('URL de foto no vàlida')).default([]),
+  videos: z.array(z.string().url('URL de vídeo no vàlida')).default([]),
+  destacat: z.boolean().default(false),
+  actiu: z.boolean().default(true),
+});
+
+export type ArtistaInput = z.infer<typeof artistaSchema>;
