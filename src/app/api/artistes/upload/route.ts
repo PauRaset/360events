@@ -41,16 +41,13 @@ export async function POST(request: Request): Promise<NextResponse> {
             'BLOB_READ_WRITE_TOKEN no està configurat a l’entorn d’execució.',
           );
         }
+        // No restringim per content-type: alguns navegadors envien les fotos
+        // d'iPhone (HEIC) amb un tipus no estàndard o buit, i Blob les
+        // rebutjaria amb un 400 (que el navegador mostra com a error de CORS).
+        // La pujada ja està protegida per la sessió d'administrador.
         return {
-          allowedContentTypes: [
-            'image/jpeg',
-            'image/png',
-            'image/webp',
-            'image/avif',
-            'image/gif',
-          ],
           addRandomSuffix: true,
-          maximumSizeInBytes: 15 * 1024 * 1024,
+          maximumSizeInBytes: 50 * 1024 * 1024,
         };
       },
     });
