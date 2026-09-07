@@ -186,3 +186,34 @@ export const disponibilitatSchema = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/, 'Data no vàlida (YYYY-MM-DD)'),
   nota: z.string().trim().max(200).optional().or(z.literal('')),
 });
+
+/** Validació d'un pressupost (creació i edició). */
+export const pressupostSchema = z.object({
+  clientNom: z.string().trim().min(2, 'El nom del client és obligatori'),
+  clientEmail: z.string().trim().email('Correu del client no vàlid'),
+  clientTelefon: z.string().trim().max(30).optional().or(z.literal('')),
+  tipusEvent: z.string().trim().max(120).optional().or(z.literal('')),
+  dataEvent: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Indica la data de l’esdeveniment'),
+  horaInici: z.string().trim().max(10).optional().or(z.literal('')),
+  ubicacio: z.string().trim().max(200).optional().or(z.literal('')),
+  concepte: z.string().trim().min(5, 'Descriu la proposta (concepte)'),
+  condicions: z.string().trim().max(5000).optional().or(z.literal('')),
+  importEuros: z.coerce
+    .number({ invalid_type_error: 'Import no vàlid' })
+    .min(0, 'Import no vàlid'),
+  artistaId: z.string().optional().or(z.literal('')),
+  reservaId: z.string().optional().or(z.literal('')),
+});
+
+export type PressupostInput = z.infer<typeof pressupostSchema>;
+
+/** Validació de la firma del client (contracte). */
+export const signaturaSchema = z.object({
+  nom: z.string().trim().min(2, 'Escriu el teu nom complet'),
+  dni: z.string().trim().max(30).optional().or(z.literal('')),
+  accepta: z.literal(true, {
+    errorMap: () => ({ message: 'Has d’acceptar les condicions per signar' }),
+  }),
+});

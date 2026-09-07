@@ -26,6 +26,7 @@ model Artista {
   reserves        Reserva[]
   usuari          Usuari?
   disponibilitat  Disponibilitat[]
+  pressupostos    Pressupost[]
 }
 
 enum RolUsuari {
@@ -85,6 +86,52 @@ model Reserva {
   gcalEventId String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+
+  pressupostos Pressupost[]
+}
+
+enum EstatPressupost {
+  ESBORRANY
+  ENVIAT
+  SIGNAT
+  REBUTJAT
+  CANCELLAT
+}
+
+model Pressupost {
+  id            String          @id @default(cuid())
+  codi          String          @unique
+  token         String          @unique
+  estat         EstatPressupost @default(ESBORRANY)
+
+  artistaId     String?
+  artista       Artista?        @relation(fields: [artistaId], references: [id])
+  reservaId     String?
+  reserva       Reserva?        @relation(fields: [reservaId], references: [id])
+
+  clientNom     String
+  clientEmail   String
+  clientTelefon String?
+
+  tipusEvent    String?
+  dataEvent     DateTime        @db.Date
+  horaInici     String?
+  ubicacio      String?
+
+  concepte      String          @db.Text
+  condicions    String?         @db.Text
+  importCentims Int
+
+  signatNom       String?
+  signatDni       String?
+  signatData      DateTime?
+  signatIp        String?
+  signatUserAgent String?
+  signatHash      String?
+
+  createdBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Equip {

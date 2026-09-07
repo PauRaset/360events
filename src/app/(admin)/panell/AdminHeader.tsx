@@ -10,9 +10,13 @@ const adminLinks = [
   { label: 'Reserves', href: '/panell/reserves' },
   { label: 'Artistes', href: '/panell/artistes' },
   { label: 'Equips', href: '/panell/equips' },
+  { label: 'Pressupostos', href: '/panell/pressupostos' },
 ];
 
-const artistaLinks = [{ label: 'La meva agenda', href: '/panell/agenda' }];
+const artistaLinks = [
+  { label: 'La meva agenda', href: '/panell/agenda' },
+  { label: 'Pressupostos', href: '/panell/pressupostos' },
+];
 
 export function AdminHeader({
   email,
