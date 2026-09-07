@@ -6,14 +6,23 @@ import { signOut } from 'next-auth/react';
 import { Logo } from '@/components/ui/Logo';
 import { cn } from '@/lib/utils';
 
-const links = [
+const adminLinks = [
   { label: 'Reserves', href: '/panell/reserves' },
   { label: 'Artistes', href: '/panell/artistes' },
   { label: 'Equips', href: '/panell/equips' },
 ];
 
-export function AdminHeader({ email }: { email?: string | null }) {
+const artistaLinks = [{ label: 'La meva agenda', href: '/panell/agenda' }];
+
+export function AdminHeader({
+  email,
+  rol,
+}: {
+  email?: string | null;
+  rol?: 'ADMIN' | 'ARTISTA';
+}) {
   const pathname = usePathname();
+  const links = rol === 'ARTISTA' ? artistaLinks : adminLinks;
 
   return (
     <header className="sticky top-0 z-10 border-b border-white/10 bg-base/80 backdrop-blur-xl">

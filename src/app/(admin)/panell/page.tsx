@@ -11,7 +11,9 @@ export const metadata: Metadata = {
 
 export default async function PanellLoginPage() {
   const session = await auth();
-  if (session?.user) redirect('/panell/reserves');
+  if (session?.user) {
+    redirect(session.user.rol === 'ARTISTA' ? '/panell/agenda' : '/panell/reserves');
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center px-5">

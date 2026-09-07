@@ -23,7 +23,41 @@ model Artista {
   actiu       Boolean  @default(true)
   createdAt   DateTime @default(now())
 
-  reserves Reserva[]
+  reserves        Reserva[]
+  usuari          Usuari?
+  disponibilitat  Disponibilitat[]
+}
+
+enum RolUsuari {
+  ADMIN
+  ARTISTA
+}
+
+model Usuari {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  rol          RolUsuari @default(ARTISTA)
+  artistaId    String?   @unique
+  artista      Artista?  @relation(fields: [artistaId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+}
+
+enum EstatDia {
+  OCUPAT
+  RESERVAT
+}
+
+model Disponibilitat {
+  id        String   @id @default(cuid())
+  artistaId String
+  artista   Artista  @relation(fields: [artistaId], references: [id], onDelete: Cascade)
+  data      DateTime @db.Date
+  estat     EstatDia @default(OCUPAT)
+  nota      String?
+  createdAt DateTime @default(now())
+
+  @@unique([artistaId, data])
 }
 
 enum EstatReserva {

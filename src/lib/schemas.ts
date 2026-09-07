@@ -166,3 +166,23 @@ export const equipSchema = z.object({
 });
 
 export type EquipInput = z.infer<typeof equipSchema>;
+
+/** Validació de l'accés (compte) d'un artista. */
+export const accesSchema = z.object({
+  email: z
+    .string({ required_error: 'El correu és obligatori' })
+    .trim()
+    .email('Introdueix un correu vàlid'),
+  password: z
+    .string({ required_error: 'La contrasenya és obligatòria' })
+    .min(8, 'La contrasenya ha de tenir com a mínim 8 caràcters'),
+});
+
+/** Validació d'un dia de disponibilitat (bloqueig). */
+export const disponibilitatSchema = z.object({
+  artistaId: z.string().min(1),
+  data: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Data no vàlida (YYYY-MM-DD)'),
+  nota: z.string().trim().max(200).optional().or(z.literal('')),
+});

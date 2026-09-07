@@ -31,7 +31,8 @@ export function LoginForm() {
       setError('Credencials incorrectes. Torna-ho a provar.');
       return;
     }
-    router.push('/panell/reserves');
+    // El middleware redirigeix a la home segons el rol (admin o artista).
+    router.push('/panell');
     router.refresh();
   }
 

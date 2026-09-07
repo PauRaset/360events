@@ -3,10 +3,15 @@ import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { GradientImage } from '@/components/ui/GradientImage';
 import { ReservaForm } from '@/components/ReservaForm';
+import { AvailabilityCalendar } from '@/components/AvailabilityCalendar';
 import { IconArrowRight, IconSpeaker } from '@/components/ui/Icons';
 import { site } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
+
+const pad = (n: number) => String(n).padStart(2, '0');
+const toYmd = (d: Date) =>
+  `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
 
 async function getArtista(slug: string) {
   return prisma.artista.findUnique({ where: { slug } });
@@ -41,6 +46,12 @@ export default async function ArtistaPage({
 }) {
   const artista = await getArtista(params.slug);
   if (!artista) notFound();
+
+  const dies = await prisma.disponibilitat.findMany({
+    where: { artistaId: artista.id },
+    orderBy: { data: 'asc' },
+  });
+  const blocked = dies.map((d) => toYmd(d.data));
 
   const esVeu = artista.categoria.toLowerCase().includes('veu');
   const jsonLd = {
@@ -159,6 +170,23 @@ export default async function ArtistaPage({
           </div>
         </section>
       ) : null}
+
+      {/* Disponibilitat */}
+      <section className="container-page py-12">
+        <h2 className="mb-2 font-display text-2xl font-bold text-platinum">
+          Disponibilitat
+        </h2>
+        <p className="mb-6 max-w-2xl text-sm text-text-gray">
+          Consulta els dies ocupats abans de demanar pressupost. Si el teu dia
+          apareix lliure, molt millor!
+        </p>
+        <div className="max-w-xl">
+          <AvailabilityCalendar
+            artistaId={artista.id}
+            initialBlocked={blocked}
+          />
+        </div>
+      </section>
 
       {/* Formulari de reserva */}
       <section id="reserva" className="container-page scroll-mt-24 py-16">
