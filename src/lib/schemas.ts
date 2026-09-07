@@ -71,6 +71,18 @@ export const contacteSchema = z.object({
 
 export type ContacteInput = z.infer<typeof contacteSchema>;
 
+/** Validació de la sol·licitud de trucada ("Et truquem ara"). */
+export const trucaSchema = z.object({
+  telefon: z
+    .string({ required_error: 'Necessitem un telèfon' })
+    .trim()
+    .min(6, 'Introdueix un telèfon vàlid')
+    .max(30),
+  nom: z.string().trim().max(120).optional().or(z.literal('')),
+});
+
+export type TrucaInput = z.infer<typeof trucaSchema>;
+
 /** Estats possibles d'una reserva (coincideix amb l'enum EstatReserva de Prisma). */
 export const ESTAT_RESERVA = [
   'NOVA',
