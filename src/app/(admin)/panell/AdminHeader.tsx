@@ -15,6 +15,7 @@ const adminLinks = [
 
 const artistaLinks = [
   { label: 'La meva agenda', href: '/panell/agenda' },
+  { label: 'Reserves', href: '/panell/reserves' },
   { label: 'Pressupostos', href: '/panell/pressupostos' },
 ];
 

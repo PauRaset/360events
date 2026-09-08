@@ -2,12 +2,7 @@ import type { NextAuthConfig } from 'next-auth';
 import type { RolUsuari } from '@prisma/client';
 
 /** Prefixos només accessibles per a l'ADMIN. */
-const ADMIN_ONLY = [
-  '/panell/reserves',
-  '/panell/artistes',
-  '/panell/equips',
-  '/panell/usuaris',
-];
+const ADMIN_ONLY = ['/panell/artistes', '/panell/equips', '/panell/usuaris'];
 
 /**
  * Configuració base d'Auth.js, segura per al runtime Edge (sense dependències

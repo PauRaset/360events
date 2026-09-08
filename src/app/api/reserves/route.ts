@@ -50,11 +50,23 @@ export async function POST(request: Request) {
     // Enviament d'email (només si hi ha RESEND_API_KEY configurada)
     if (resend) {
       try {
+        // Si la reserva és per a un artista concret, l'avís va a l'artista
+        // (amb l'admin en còpia). Si no, només a l'admin.
+        const recipients = new Set<string>([RESEND_TO]);
+        if (artistaId) {
+          const compte = await prisma.usuari.findUnique({
+            where: { artistaId },
+            select: { email: true },
+          });
+          if (compte?.email) recipients.add(compte.email);
+        }
         await resend.emails.send({
           from: RESEND_FROM,
-          to: RESEND_TO,
+          to: Array.from(recipients),
           replyTo: d.email,
-          subject: `Nova reserva · ${d.tipusEvent} · ${d.nom}`,
+          subject: reserva.artista
+            ? `Nova reserva per a ${reserva.artista.nom} · ${d.tipusEvent} · ${d.nom}`
+            : `Nova reserva · ${d.tipusEvent} · ${d.nom}`,
           html: buildEmailHtml(reserva),
         });
       } catch (mailErr) {

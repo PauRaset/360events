@@ -34,6 +34,20 @@ export async function PATCH(
     );
   }
 
+  // Un artista només pot gestionar les seves pròpies reserves.
+  if (session.user.rol === 'ARTISTA') {
+    const reserva = await prisma.reserva.findUnique({
+      where: { id: params.id },
+      select: { artistaId: true },
+    });
+    if (!reserva || reserva.artistaId !== session.user.artistaId) {
+      return NextResponse.json(
+        { ok: false, error: 'No autoritzat' },
+        { status: 401 },
+      );
+    }
+  }
+
   try {
     const reserva = await prisma.reserva.update({
       where: { id: params.id },

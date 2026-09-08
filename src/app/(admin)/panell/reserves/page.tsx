@@ -15,9 +15,15 @@ export const metadata: Metadata = {
 
 export default async function ReservesPage() {
   const session = await auth();
-  if (!session?.user) redirect('/panell');
+  const user = session?.user;
+  if (!user) redirect('/panell');
+
+  // L'artista només veu les seves reserves; l'admin, totes.
+  const where =
+    user.rol === 'ARTISTA' ? { artistaId: user.artistaId ?? '__none__' } : {};
 
   const reserves = await prisma.reserva.findMany({
+    where,
     orderBy: { createdAt: 'desc' },
     include: { artista: true },
   });
@@ -40,7 +46,7 @@ export default async function ReservesPage() {
 
   return (
     <div className="min-h-screen">
-      <AdminHeader email={session.user.email} />
+      <AdminHeader email={user.email} rol={user.rol} />
 
       <main className="container-page py-8">
         <div className="mb-6">
