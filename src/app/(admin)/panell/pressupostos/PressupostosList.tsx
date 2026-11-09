@@ -14,6 +14,7 @@ export type PressupostRow = {
   dataEvent: string;
   importCentims: number;
   artistaNom: string | null;
+  signatData: string | null;
 };
 
 const estatColor: Record<string, string> = {
@@ -94,6 +95,11 @@ export function PressupostosList({ initial }: { initial: PressupostRow[] }) {
                 {formatData(r.dataEvent)} · {formatEuros(r.importCentims)}
                 {r.artistaNom ? ` · ${r.artistaNom}` : ''}
               </p>
+              {r.estat === 'SIGNAT' && r.signatData && (
+                <p className="mt-0.5 text-xs text-emerald-300">
+                  ✓ Signat el {formatData(r.signatData)}
+                </p>
+              )}
             </div>
 
             <div className="flex shrink-0 flex-wrap items-center gap-2">

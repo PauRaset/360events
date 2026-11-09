@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { resend, RESEND_FROM } from '@/lib/resend';
 import { formatEuros, formatData } from '@/lib/format';
 import { site } from '@/lib/site';
+import { notifyPressupostEnviat } from '@/lib/pressupostEmails';
 import type { Session } from 'next-auth';
 
 export const runtime = 'nodejs';
@@ -74,6 +75,19 @@ export async function POST(
       // No trenquem: el pressupost queda ENVIAT i es pot compartir l'enllaç manualment.
     }
   }
+
+  // Avisem l'artista (i l'admin) que té un pressupost pendent de firma.
+  await notifyPressupostEnviat(
+    {
+      codi: pressupost.codi,
+      clientNom: pressupost.clientNom,
+      clientEmail: pressupost.clientEmail,
+      importCentims: pressupost.importCentims,
+      dataEvent: pressupost.dataEvent,
+      artistaId: pressupost.artistaId,
+    },
+    link,
+  );
 
   return NextResponse.json({ ok: true, link });
 }

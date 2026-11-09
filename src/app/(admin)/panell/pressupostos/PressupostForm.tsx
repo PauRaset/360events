@@ -23,12 +23,13 @@ export type PressupostFormData = {
   condicions: string;
   importEuros: string;
   artistaId: string;
+  reservaId: string;
 };
 
 const empty: PressupostFormData = {
   clientNom: '', clientEmail: '', clientTelefon: '', tipusEvent: '',
   dataEvent: '', horaInici: '', ubicacio: '', concepte: '', condicions: '',
-  importEuros: '', artistaId: '',
+  importEuros: '', artistaId: '', reservaId: '',
 };
 
 export function PressupostForm({

@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import {
   ESTAT_RESERVA,
   ESTAT_LABELS,
@@ -211,6 +212,13 @@ export function ReservesBoard({ initial }: { initial: ReservaItem[] }) {
                       </option>
                     ))}
                   </select>
+
+                  <Link
+                    href={`/panell/pressupostos/nou?reservaId=${r.id}`}
+                    className="mt-3 block rounded-xl border border-electric/40 bg-electric/10 px-4 py-2.5 text-center text-sm font-semibold text-electric-bright transition-colors hover:bg-electric/20"
+                  >
+                    Crear pressupost
+                  </Link>
                 </div>
               </div>
             </article>

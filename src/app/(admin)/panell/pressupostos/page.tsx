@@ -40,6 +40,7 @@ export default async function PressupostosPage() {
     dataEvent: toYmd(p.dataEvent),
     importCentims: p.importCentims,
     artistaNom: p.artista?.nom ?? null,
+    signatData: p.signatData ? p.signatData.toISOString() : null,
   }));
 
   return (

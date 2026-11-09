@@ -57,6 +57,7 @@ export default async function EditarPressupostPage({
     condicions: p.condicions ?? '',
     importEuros: (p.importCentims / 100).toString(),
     artistaId: p.artistaId ?? '',
+    reservaId: p.reservaId ?? '',
   };
 
   return (

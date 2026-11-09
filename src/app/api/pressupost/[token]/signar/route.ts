@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createHash } from 'node:crypto';
 import { prisma } from '@/lib/prisma';
 import { signaturaSchema } from '@/lib/schemas';
+import { notifyPressupostSignat } from '@/lib/pressupostEmails';
 
 export const runtime = 'nodejs';
 
@@ -90,7 +91,26 @@ export async function POST(
           },
         });
       }
+      // Si el pressupost prové d'una reserva, la confirmem automàticament.
+      if (pressupost.reservaId) {
+        await tx.reserva.update({
+          where: { id: pressupost.reservaId },
+          data: { estat: 'CONFIRMADA' },
+        });
+      }
     });
+
+    // Avisos: artista + admin (contracte signat) i confirmació al client.
+    await notifyPressupostSignat({
+      codi: pressupost.codi,
+      clientNom: pressupost.clientNom,
+      clientEmail: pressupost.clientEmail,
+      importCentims: pressupost.importCentims,
+      dataEvent: pressupost.dataEvent,
+      artistaId: pressupost.artistaId,
+      signatNom: parsed.data.nom,
+    });
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error('[pressupost/signar] Error:', err);
