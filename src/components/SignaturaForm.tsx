@@ -71,8 +71,8 @@ export function SignaturaForm({ token }: { token: string }) {
           <input id="sig-nom" value={nom} onChange={(e) => setNom(e.target.value)} className={inputCls} required minLength={2} />
         </div>
         <div>
-          <label htmlFor="sig-dni" className={labelCls}>DNI/NIF <span className="text-text-gray">(opcional)</span></label>
-          <input id="sig-dni" value={dni} onChange={(e) => setDni(e.target.value)} className={inputCls} />
+          <label htmlFor="sig-dni" className={labelCls}>DNI/NIF</label>
+          <input id="sig-dni" value={dni} onChange={(e) => setDni(e.target.value)} className={inputCls} required minLength={6} />
         </div>
       </div>
 

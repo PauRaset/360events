@@ -212,7 +212,11 @@ export type PressupostInput = z.infer<typeof pressupostSchema>;
 /** Validació de la firma del client (contracte). */
 export const signaturaSchema = z.object({
   nom: z.string().trim().min(2, 'Escriu el teu nom complet'),
-  dni: z.string().trim().max(30).optional().or(z.literal('')),
+  dni: z
+    .string({ required_error: 'El DNI/NIF és obligatori' })
+    .trim()
+    .min(6, 'Introdueix un DNI/NIF vàlid')
+    .max(30),
   accepta: z.literal(true, {
     errorMap: () => ({ message: 'Has d’acceptar les condicions per signar' }),
   }),
