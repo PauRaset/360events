@@ -8,6 +8,9 @@ import { CallbackBand } from '@/components/sections/CallbackBand';
 import { localBusinessJsonLd } from '@/lib/jsonld';
 import { site } from '@/lib/site';
 
+// La home mostra artistes destacats des de la base de dades.
+export const dynamic = 'force-dynamic';
+
 export function generateMetadata(): Metadata {
   return {
     title: `${site.name} · ${site.tagline}`,
