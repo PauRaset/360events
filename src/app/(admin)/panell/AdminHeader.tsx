@@ -10,6 +10,7 @@ const adminLinks = [
   { label: 'Reserves', href: '/panell/reserves' },
   { label: 'Artistes', href: '/panell/artistes' },
   { label: 'Equips', href: '/panell/equips' },
+  { label: 'Galeria', href: '/panell/galeria' },
   { label: 'Pressupostos', href: '/panell/pressupostos' },
 ];
 

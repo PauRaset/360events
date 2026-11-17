@@ -145,3 +145,12 @@ model Equip {
   ordre      Int      @default(0)
   createdAt  DateTime @default(now())
 }
+
+model FotoGaleria {
+  id        String   @id @default(cuid())
+  url       String
+  titol     String?
+  ordre     Int      @default(0)
+  actiu     Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
