@@ -6,6 +6,7 @@ import { ReservaForm } from '@/components/ReservaForm';
 import { AvailabilityCalendar } from '@/components/AvailabilityCalendar';
 import { IconArrowRight, IconSpeaker } from '@/components/ui/Icons';
 import { site } from '@/lib/site';
+import { toEmbedUrl } from '@/lib/video';
 
 export const dynamic = 'force-dynamic';
 
@@ -138,7 +139,7 @@ export default async function ArtistaPage({
                 className="relative aspect-video overflow-hidden rounded-2xl border border-white/10"
               >
                 <iframe
-                  src={url}
+                  src={toEmbedUrl(url)}
                   title={`${artista.nom} — vídeo ${i + 1}`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen

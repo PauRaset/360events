@@ -216,7 +216,7 @@ export function ArtistaForm({
                   value={v}
                   onChange={(e) => setVideo(i, e.target.value)}
                   className={inputCls}
-                  placeholder="https://www.youtube.com/embed/…"
+                  placeholder="Enganxa l’enllaç de YouTube (p. ex. https://youtu.be/…)"
                 />
                 <button
                   type="button"
